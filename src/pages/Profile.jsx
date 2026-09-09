@@ -1,44 +1,25 @@
 import { Link } from "react-router-dom";
+import { questionList } from "../data/questions";
 
 const thinkingStats = [
-  {
-    number: "06",
-    label: "QUESTIONS EXPLORED",
-  },
-  {
-    number: "04",
-    label: "PERSPECTIVES",
-  },
-  {
-    number: "02",
-    label: "IDEAS BUILT",
-  },
-  {
-    number: "01",
-    label: "CHALLENGES",
-  },
+  { number: "06", label: "QUESTIONS EXPLORED" },
+  { number: "04", label: "PERSPECTIVES" },
+  { number: "02", label: "IDEAS BUILT" },
+  { number: "01", label: "CHALLENGES" },
 ];
 
-const recentThinking = [
-  {
-    category: "FUTURE",
-    question: "Would you let AI choose your career?",
-    action: "Added a perspective",
-    date: "Today",
-  },
-  {
-    category: "CREATIVITY",
-    question: "Does technology make us more creative?",
-    action: "Explored the thinking space",
-    date: "Yesterday",
-  },
-  {
-    category: "RELATIONSHIPS",
-    question: "What actually makes a friendship last?",
-    action: "Resonated with a perspective",
-    date: "2 days ago",
-  },
-];
+const recentThinking = questionList.slice(0, 3).map((question, index) => ({
+  id: question.id,
+  category: question.category.split(" / ")[0],
+  question: question.question,
+  action:
+    index === 0
+      ? "Added a perspective"
+      : index === 1
+        ? "Explored the thinking space"
+        : "Resonated with a perspective",
+  date: index === 0 ? "Today" : index === 1 ? "Yesterday" : "2 days ago",
+}));
 
 function Profile() {
   return (
@@ -59,12 +40,12 @@ function Profile() {
           </p>
         </div>
 
-        <div className="profile-mark">
+        <div className="profile-mark" aria-hidden="true">
           <span>?</span>
         </div>
       </header>
 
-      <section className="thinking-stats">
+      <section className="thinking-stats" aria-label="Thinking stats">
         {thinkingStats.map((stat) => (
           <div className="thinking-stat" key={stat.label}>
             <strong>{stat.number}</strong>
@@ -76,32 +57,28 @@ function Profile() {
       <section className="recent-thinking">
         <div className="section-heading">
           <p className="eyebrow">RECENT ACTIVITY</p>
-
           <span>YOUR CURIOSITY TRAIL</span>
         </div>
 
         <div className="thinking-list">
           {recentThinking.map((item, index) => (
             <Link
-              to="/question/1"
+              to={`/question/${item.id}`}
               className="thinking-item"
-              key={item.question}
+              key={item.id}
+              aria-label={`Open ${item.question}`}
             >
-              <div className="thinking-number">
-                0{index + 1}
-              </div>
+              <div className="thinking-number">0{index + 1}</div>
 
               <div className="thinking-main">
                 <span>{item.category}</span>
-
                 <h2>{item.question}</h2>
-
                 <p>{item.action}</p>
               </div>
 
               <div className="thinking-date">
                 {item.date}
-                <span>→</span>
+                <span aria-hidden="true">→</span>
               </div>
             </Link>
           ))}

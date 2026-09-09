@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import Explore from "./pages/Explore";
 import Question from "./pages/Question";
 import Profile from "./pages/Profile";
 
 function Home() {
   return (
-    <div className="app">
-      <nav className="navbar">
-        <div className="logo">
+    <div className="app-shell">
+      <nav className="navbar" aria-label="Main navigation">
+        <div className="logo" aria-label="QUEST home">
           QUEST<span>•</span>
         </div>
 
@@ -50,9 +50,9 @@ function Home() {
           </div>
         </div>
 
-        <div className="hero-visual">
+        <div className="hero-visual" aria-hidden="true">
           <div className="orbit orbit-one">
-            <span className="node node-one">AI & careers</span>
+            <span className="node node-one">AI &amp; careers</span>
           </div>
 
           <div className="orbit orbit-two">
@@ -76,18 +76,23 @@ function Home() {
   );
 }
 
+function AppRoutes() {
+  const location = useLocation();
+
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/explore" element={<Explore />} />
+      <Route path="/question/:id" element={<Question key={location.pathname} />} />
+      <Route path="/thinking" element={<Profile />} />
+    </Routes>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/explore" element={<Explore />} />
-
-        <Route path="/question/:id" element={<Question />} />
-
-        <Route path="/thinking" element={<Profile />} />
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

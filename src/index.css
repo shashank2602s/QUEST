@@ -11,12 +11,20 @@
   color: #111111;
   background: #f5f3ee;
   font-synthesis: none;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   background: #f5f3ee;
+  color: #111111;
 }
 
 button,
@@ -33,21 +41,48 @@ a {
   text-decoration: none;
 }
 
-/* NAVBAR */
+button:focus-visible,
+a:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
 
 .navbar {
-  height: 84px;
+  min-height: 84px;
   padding: 0 6vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #d8d5ce;
+  gap: 20px;
 }
 
 .logo {
   font-size: 1.4rem;
   font-weight: 700;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.06em;
 }
 
 .logo span {
@@ -56,34 +91,75 @@ a {
 
 .nav-links {
   display: flex;
+  align-items: center;
   gap: 38px;
   font-size: 0.9rem;
   color: #55534f;
 }
 
-.nav-links a {
-  transition: color 0.2s ease;
+.nav-links a,
+.nav-button,
+.primary-button,
+.secondary-button,
+.question-bottom a,
+.contribute-actions button,
+.node-actions button,
+.publish-button,
+.thinking-item {
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a:focus-visible {
   color: #111;
 }
 
-.nav-button {
-  border: 1px solid #111;
-  background: transparent;
-  padding: 11px 18px;
+.nav-button,
+.primary-button,
+.secondary-button,
+.contribute-actions button,
+.publish-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   border-radius: 100px;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
 }
 
-.nav-button:hover {
+.nav-button,
+.primary-button {
+  border: 1px solid #111;
   background: #111;
   color: #f5f3ee;
+  padding: 11px 18px;
+  font-size: 0.85rem;
 }
 
-/* HERO */
+.nav-button:hover,
+.primary-button:hover,
+.primary-button:focus-visible {
+  transform: translateY(-1px);
+  background: #1d1d1d;
+}
+
+.secondary-button {
+  border: 1px solid #c9c5bd;
+  background: transparent;
+  padding: 13px 21px;
+  color: #111;
+}
+
+.secondary-button:hover,
+.secondary-button:focus-visible,
+.contribute-actions button:hover,
+.contribute-actions button:focus-visible,
+.nav-button:focus-visible,
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.question-bottom a:hover,
+.question-bottom a:focus-visible {
+  border-color: #111;
+}
 
 .hero {
   min-height: calc(100vh - 84px);
@@ -95,7 +171,7 @@ a {
 }
 
 .hero-content {
-  max-width: 680px;
+  max-width: 690px;
 }
 
 .eyebrow {
@@ -116,51 +192,27 @@ h1 {
 h1 em {
   font-family: "Playfair Display", serif;
   font-weight: 500;
+  font-style: italic;
   letter-spacing: -0.06em;
 }
 
-.hero-description {
-  max-width: 500px;
+.hero-description,
+.explore-intro,
+.question-description,
+.profile-intro {
+  max-width: 520px;
   margin-top: 38px;
   font-size: 1.05rem;
-  line-height: 1.65;
+  line-height: 1.7;
   color: #5f5b54;
 }
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 35px;
 }
-
-.primary-button,
-.secondary-button {
-  padding: 14px 21px;
-  border-radius: 100px;
-  font-size: 0.88rem;
-  transition: all 0.25s ease;
-}
-
-.primary-button {
-  border: 1px solid #111;
-  background: #111;
-  color: #fff;
-}
-
-.primary-button:hover {
-  transform: translateY(-2px);
-}
-
-.secondary-button {
-  border: 1px solid #c9c5bd;
-  background: transparent;
-}
-
-.secondary-button:hover {
-  border-color: #111;
-}
-
-/* VISUAL */
 
 .hero-visual {
   min-height: 500px;
@@ -183,6 +235,7 @@ h1 em {
   font-size: 4rem;
   position: relative;
   z-index: 5;
+  box-shadow: 0 20px 45px rgba(17, 17, 17, 0.1);
 }
 
 .orbit {
@@ -223,6 +276,7 @@ h1 em {
 .node-one {
   top: -12px;
   left: 50%;
+  transform: translateX(-50%);
 }
 
 .node-two {
@@ -257,58 +311,12 @@ h1 em {
   }
 }
 
-/* MOBILE */
-
-@media (max-width: 850px) {
-  .nav-links {
-    display: none;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-    padding-top: 60px;
-  }
-
-  .hero-visual {
-    min-height: 420px;
-  }
-
-  .orbit-three {
-    width: 380px;
-    height: 380px;
-  }
+.explore-page,
+.profile-page,
+.question-page {
+  max-width: 1440px;
+  margin: 0 auto;
 }
-
-@media (max-width: 500px) {
-  .navbar {
-    padding: 0 5vw;
-  }
-
-  .nav-button {
-    padding: 9px 13px;
-  }
-
-  .hero {
-    padding: 50px 5vw;
-  }
-
-  h1 {
-    font-size: 4rem;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-  }
-
-  .hero-visual {
-    min-height: 330px;
-    transform: scale(0.75);
-    margin: -30px 0;
-  }
-}
-/* =========================
-   EXPLORE PAGE
-========================= */
 
 .explore-page {
   min-height: 100vh;
@@ -324,19 +332,9 @@ h1 em {
   margin-top: 10px;
 }
 
-.explore-intro {
-  max-width: 520px;
-  margin-top: 30px;
-  color: #5f5b54;
-  font-size: 1.05rem;
-  line-height: 1.7;
-}
-
-/* QUESTION GRID */
-
 .question-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   max-width: 1200px;
 }
@@ -349,13 +347,11 @@ h1 em {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-.question-card:hover {
+.question-card:hover,
+.question-card:focus-within {
   transform: translateY(-5px);
   border-color: #111;
   background: #efede7;
@@ -366,6 +362,7 @@ h1 em {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .question-top {
@@ -399,40 +396,15 @@ h1 em {
   font-size: 0.76rem;
 }
 
-.question-bottom button {
-  border: 0;
-  background: transparent;
-  font-weight: 600;
+.question-bottom a {
   color: #111;
-  transition: transform 0.2s ease;
+  font-weight: 600;
 }
 
-.question-bottom button:hover {
+.question-bottom a:hover,
+.question-bottom a:focus-visible {
   transform: translateX(4px);
 }
-
-/* EXPLORE MOBILE */
-
-@media (max-width: 750px) {
-  .explore-page {
-    padding: 55px 5vw;
-  }
-
-  .explore-header {
-    margin-bottom: 45px;
-  }
-
-  .question-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .question-card {
-    min-height: 300px;
-  }
-}
-/* =========================
-   QUESTION SPACE
-========================= */
 
 .question-page {
   min-height: 100vh;
@@ -444,10 +416,10 @@ h1 em {
   font-size: 0.78rem;
   color: #77736c;
   margin-bottom: 65px;
-  transition: color 0.2s ease;
 }
 
-.back-link:hover {
+.back-link:hover,
+.back-link:focus-visible {
   color: #111;
 }
 
@@ -470,13 +442,11 @@ h1 em {
 .question-description {
   max-width: 570px;
   margin-top: 32px;
-  color: #5f5b54;
-  font-size: 1rem;
-  line-height: 1.7;
 }
 
 .question-meta {
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
   margin-top: 28px;
   font-size: 0.72rem;
@@ -484,8 +454,6 @@ h1 em {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-
-/* THINKING SPACE */
 
 .thinking-space {
   height: 720px;
@@ -508,8 +476,6 @@ h1 em {
   letter-spacing: 0.13em;
   color: #8a867e;
 }
-
-/* CORE */
 
 .question-core {
   position: absolute;
@@ -541,8 +507,6 @@ h1 em {
   line-height: 1;
 }
 
-/* CONNECTIONS */
-
 .connection-line {
   position: absolute;
   height: 1px;
@@ -572,8 +536,6 @@ h1 em {
   transform: rotate(145deg);
 }
 
-/* PERSPECTIVE NODES */
-
 .perspective-node {
   position: absolute;
   width: 280px;
@@ -581,12 +543,11 @@ h1 em {
   border: 1px solid #d0ccc4;
   background: #f5f3ee;
   z-index: 2;
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
-.perspective-node:hover {
+.perspective-node:hover,
+.perspective-node:focus-within {
   transform: translateY(-5px);
   border-color: #111;
 }
@@ -639,23 +600,30 @@ h1 em {
 
 .node-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 20px;
 }
 
-.node-actions button {
+.node-actions button,
+.contribute-actions button,
+.publish-button {
   border: 1px solid #d0ccc4;
   background: transparent;
-  padding: 7px 11px;
+  padding: 8px 12px;
   border-radius: 100px;
   font-size: 0.65rem;
+  color: #111;
 }
 
-.node-actions button:hover {
+.node-actions button:hover,
+.node-actions button:focus-visible,
+.contribute-actions button:hover,
+.contribute-actions button:focus-visible,
+.publish-button:hover,
+.publish-button:focus-visible {
   border-color: #111;
 }
-
-/* CONTRIBUTE */
 
 .contribute-section {
   padding: 110px 0 50px;
@@ -677,70 +645,17 @@ h1 em {
 }
 
 .contribute-actions button {
+  min-height: 44px;
   padding: 13px 18px;
-  border: 1px solid #c9c5bd;
-  background: transparent;
-  border-radius: 100px;
-  font-size: 0.78rem;
-  transition: all 0.2s ease;
+  border-color: #c9c5bd;
 }
 
-.contribute-actions button:hover {
+.contribute-actions button:hover,
+.contribute-actions button:focus-visible {
   background: #111;
   color: #f5f3ee;
   border-color: #111;
 }
-
-/* QUESTION MOBILE */
-
-@media (max-width: 850px) {
-  .question-page {
-    padding: 35px 5vw 70px;
-  }
-
-  .thinking-space {
-    height: auto;
-    padding: 80px 0 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    overflow: visible;
-  }
-
-  .space-label {
-    position: static;
-    margin-bottom: 20px;
-  }
-
-  .question-core {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-    margin: 10px auto 35px;
-    flex-shrink: 0;
-  }
-
-  .connection-line {
-    display: none;
-  }
-
-  .perspective-node {
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    top: auto;
-    width: 100%;
-  }
-
-  .contribute-section {
-    padding-top: 80px;
-  }
-}
-/* =========================
-   COMPOSER
-========================= */
 
 .composer-overlay {
   position: fixed;
@@ -770,6 +685,7 @@ h1 em {
   background: transparent;
   font-size: 1.7rem;
   line-height: 1;
+  color: #111;
 }
 
 .composer h2 {
@@ -811,20 +727,16 @@ h1 em {
 }
 
 .publish-button {
-  padding: 13px 18px;
-  border: 1px solid #111;
-  border-radius: 100px;
   background: #111;
   color: #fff;
-  font-size: 0.75rem;
+  border-color: #111;
+  padding: 13px 18px;
 }
 
 .publish-button:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
-
-/* NEW PERSPECTIVE */
 
 .node-new {
   left: 50%;
@@ -835,7 +747,8 @@ h1 em {
   animation: appear 0.4s ease;
 }
 
-.node-new:hover {
+.node-new:hover,
+.node-new:focus-within {
   transform: translateX(-50%) translateY(-5px);
 }
 
@@ -850,36 +763,6 @@ h1 em {
     transform: translateX(-50%) scale(1);
   }
 }
-
-@media (max-width: 600px) {
-  .composer {
-    padding: 35px 25px;
-  }
-
-  .composer-footer {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .publish-button {
-    width: 100%;
-  }
-
-  .node-new {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    transform: none;
-    width: 100%;
-  }
-
-  .node-new:hover {
-    transform: translateY(-5px);
-  }
-}
-/* =========================
-   MY THINKING / PROFILE
-========================= */
 
 .profile-page {
   min-height: 100vh;
@@ -898,14 +781,6 @@ h1 em {
 
 .profile-header h1 {
   margin-top: 10px;
-}
-
-.profile-intro {
-  max-width: 500px;
-  margin-top: 32px;
-  color: #5f5b54;
-  font-size: 1rem;
-  line-height: 1.7;
 }
 
 .profile-mark {
@@ -953,12 +828,10 @@ h1 em {
   z-index: 2;
 }
 
-/* STATS */
-
 .thinking-stats {
   max-width: 1200px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border-bottom: 1px solid #d4d0c8;
 }
 
@@ -993,8 +866,6 @@ h1 em {
   color: #77736c;
 }
 
-/* RECENT THINKING */
-
 .recent-thinking {
   max-width: 1200px;
   padding-top: 100px;
@@ -1026,16 +897,14 @@ h1 em {
   align-items: center;
   gap: 25px;
   border-bottom: 1px solid #d4d0c8;
-  transition:
-    padding 0.25s ease,
-    background 0.25s ease;
 }
 
 .thinking-item:last-child {
   border-bottom: 0;
 }
 
-.thinking-item:hover {
+.thinking-item:hover,
+.thinking-item:focus-visible {
   padding-left: 12px;
   padding-right: 12px;
   background: #efede7;
@@ -1083,11 +952,10 @@ h1 em {
   transition: transform 0.2s ease;
 }
 
-.thinking-item:hover .thinking-date span {
+.thinking-item:hover .thinking-date span,
+.thinking-item:focus-visible .thinking-date span {
   transform: translateX(5px);
 }
-
-/* CLOSING */
 
 .profile-closing {
   max-width: 850px;
@@ -1107,9 +975,101 @@ h1 em {
   margin-top: 35px;
 }
 
-/* PROFILE MOBILE */
+.node-actions button.resonated {
+  background: #111;
+  color: #f5f3ee;
+  border-color: #111;
+}
+
+.node-actions button.resonated:hover,
+.node-actions button.resonated:focus-visible {
+  background: #2a2a2a;
+  color: #f5f3ee;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 60px;
+  }
+
+  .hero-visual {
+    min-height: 420px;
+  }
+
+  .orbit-three {
+    width: 380px;
+    height: 380px;
+  }
+}
 
 @media (max-width: 850px) {
+  .navbar {
+    flex-wrap: wrap;
+    padding-top: 18px;
+    padding-bottom: 14px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 0.75rem;
+  }
+
+  .nav-button {
+    margin-left: auto;
+  }
+
+  .question-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question-page {
+    padding: 35px 5vw 70px;
+  }
+
+  .thinking-space {
+    height: auto;
+    padding: 80px 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow: visible;
+  }
+
+  .space-label {
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .question-core {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin: 10px auto 35px;
+    flex-shrink: 0;
+  }
+
+  .connection-line {
+    display: none;
+  }
+
+  .perspective-node {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    top: auto;
+    width: 100%;
+  }
+
+  .contribute-section {
+    padding-top: 80px;
+  }
+
   .profile-page {
     padding: 55px 5vw 80px;
   }
@@ -1143,7 +1103,7 @@ h1 em {
   }
 
   .thinking-stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .thinking-stat {
@@ -1178,7 +1138,62 @@ h1 em {
   }
 }
 
+@media (max-width: 600px) {
+  .navbar {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
+  .hero {
+    padding: 50px 5vw;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-visual {
+    min-height: 330px;
+    transform: scale(0.75);
+    margin: -30px 0;
+  }
+
+  .composer {
+    padding: 35px 25px;
+  }
+
+  .composer-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .publish-button {
+    width: 100%;
+  }
+
+  .node-new {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  .node-new:hover,
+  .node-new:focus-within {
+    transform: translateY(-5px);
+  }
+}
+
 @media (max-width: 550px) {
+  .explore-page,
+  .profile-page,
+  .question-page {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
   .profile-header h1 {
     font-size: 4rem;
   }
@@ -1215,7 +1230,8 @@ h1 em {
     padding: 25px 0;
   }
 
-  .thinking-item:hover {
+  .thinking-item:hover,
+  .thinking-item:focus-visible {
     padding-left: 8px;
     padding-right: 8px;
   }
@@ -1232,15 +1248,12 @@ h1 em {
     margin-top: 5px;
   }
 }
-/* RESONATE STATE */
 
-.node-actions button.resonated {
-  background: #111;
-  color: #f5f3ee;
-  border-color: #111;
-}
-
-.node-actions button.resonated:hover {
-  background: #2a2a2a;
-  color: #f5f3ee;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
